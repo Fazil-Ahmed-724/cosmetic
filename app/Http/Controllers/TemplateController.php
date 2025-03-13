@@ -21,8 +21,10 @@ class TemplateController extends Controller
     {
         $title = 'Templates';
 
-        // $patient_types = Helper::getPatientTypesForSelect();
-        $patient_types = PatientType::where('role_id',auth()->user()->roles->first()->id)->pluck('name', 'value')->toArray();
+        // dd(auth()->user());
+
+        $patient_types = Helper::getPatientTypesForSelect();
+        // $patient_types = PatientType::pluck('name', 'value')->toArray();
         $report_types = Helper::getReportTypesForSelect();
 
         if ($request->ajax()) {
@@ -37,8 +39,8 @@ class TemplateController extends Controller
                 'templates.is_report',
                 'templates.html',
             ])
-                ->where('is_active', 1)
-                ->where('role_id', auth()->user()->roles->first()->id);
+                ->where('is_active', 1);
+                // ->where('role_id', auth()->user()->roles->first()->id);
 
             if (in_array($patient_type, array_keys($patient_types)) && $patient_type != 'All') {
                 $query = $query->where('templates.patient_type', $patient_type);
@@ -147,7 +149,7 @@ class TemplateController extends Controller
         $patient = null;
         $appointment = null;
         // if ($request->has('patient_id')) {
-        $patient = Patient::findOrFail($request->patient_id ?? 12);
+        $patient = Patient::findOrFail(12);
         $appointment = Appointment::where('patient_id', $patient->id)->first();
         // }
 

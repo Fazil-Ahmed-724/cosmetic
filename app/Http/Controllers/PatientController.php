@@ -350,6 +350,7 @@ class PatientController extends Controller
 
         // $patient_types = Helper::getPatientTypesForSelect();
         $patient_types = PatientType::where('role_id',auth()->user()->roles->first()->id)->pluck('name', 'value')->toArray();
+
         $AppointmentTypes = Helper::getAppointmentTypes();
         $branches = Helper::getCompanyBranchesForSelect(1);
 

@@ -1,0 +1,69 @@
+-- Create roles table
+CREATE TABLE `roles` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255) UNIQUE NOT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL
+);
+
+-- Create role_user pivot table
+CREATE TABLE `role_user` (
+    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `user_id` BIGINT UNSIGNED NOT NULL,
+    `role_id` BIGINT UNSIGNED NOT NULL,
+    `created_at` TIMESTAMP NULL DEFAULT NULL,
+    `updated_at` TIMESTAMP NULL DEFAULT NULL,
+    CONSTRAINT `role_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `role_user_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
+);
+
+-- Create patient_types table with corrected syntax
+CREATE TABLE patient_types (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    role_id INT(10) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    value VARCHAR(255) NOT NULL,  -- Added missing comma
+    appointment_duration INT(10) NOT NULL
+);
+
+-- Alter patients and templates tables
+ALTER TABLE patients MODIFY COLUMN type VARCHAR(50);
+ALTER TABLE templates MODIFY COLUMN patient_type VARCHAR(50);
+
+ALTER TABLE patients ADD COLUMN role_id INT NOT NULL DEFAULT 1;
+ALTER TABLE templates ADD COLUMN role_id INT NOT NULL DEFAULT 1;
+
+-- Insert data into patient_types table
+INSERT INTO patient_types (role_id, name, value, appointment_duration) VALUES
+(1, 'Adult', 'adult', 120),
+(1, 'New born', 'new_born', 60),
+(1, 'Old boy', 'old_boy', 90),
+(1, 'Aftercare', 'aftercare', 90),
+(1, 'Consent Form Vasectomy', 'consent_form_vasectomy', 90),
+(1, 'Consent Form', 'consent_form', 90),
+(1, 'Discharge Letter Vasectomy', 'discharge_letter_vasectomy', 120),
+(1, 'Discharge Summary', 'discharge_summary', 60),
+(1, 'History sheet - Cyst', 'history_sheet_cyst', 90),
+(1, 'History sheet - Split ear lobe', 'history_sheet_split_ear_lobe', 120),
+(1, 'History sheet - Toe Nail', 'history_sheet_toe_nail', 60),
+(1, 'History sheet - Wart', 'history_sheet_wart', 90),
+(1, 'Information Pack Vasectomy', 'information_pack_vasectomy', 120),
+(1, 'Minor Surgery Information Pack', 'minor_surgery_information_pack', 60),
+(1, 'Patient Guide Vasectomy', 'patient_guide_vasectomy', 90),
+(1, 'Patient Guide', 'patient_guide', 120),
+(1, 'Post Vasectomy Advice', 'post_vasectomy_advice', 60),
+(1, 'Pre operative information', 'pre_operative_information', 90),
+(1, 'Prescription', 'prescription', 120),
+(1, 'Receipt Vasectomy', 'receipt_vasectomy', 60),
+(1, 'Receipt', 'receipt', 90);
+
+-- Insert data into roles table
+INSERT INTO roles (id, name, created_at, updated_at) VALUES 
+(1, 'admin', '2025-03-01 14:30:00', '2025-03-01 14:30:00'),
+(2, 'user', '2025-03-01 14:30:00', '2025-03-01 14:30:00'),
+(3, 'editor', '2025-03-01 14:30:00', '2025-03-01 14:30:00'),
+(4, 'manager', '2025-03-01 14:31:00', '2025-03-01 14:31:00');
+
+-- Insert data into role_user table
+INSERT INTO role_user (user_id, role_id, created_at, updated_at) VALUES 
+(1, 1, '2025-03-01 14:30:00', '2025-03-01 14:30:00');
