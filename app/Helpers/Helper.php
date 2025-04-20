@@ -86,6 +86,11 @@ class Helper
         $patient_types = PatientType::where('role_id',auth()->user()->roles->first()->id)->pluck('name', 'value')->toArray();
         return $patient_types;
     }
+    public static function getPatientTypesForSelectWithOutRole()
+    {
+        $patient_types = PatientType::pluck('name', 'value')->toArray();
+        return $patient_types;
+    }
     public static function getAppointmentTypes()
     {
         $AppointmentTypes = config('constants.patient_appointment_type', []);

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-
+use App\Models\PatientType;
 class PatientRegisterLinkController extends Controller
 {
     public function register($unique_key)
@@ -34,7 +34,7 @@ class PatientRegisterLinkController extends Controller
         $patient = new Patient();
         $patient->id = 0;
 
-        $patient_types = Helper::getPatientTypesForSelect();
+        $patient_types = Helper::getPatientTypesForSelectWithOutRole();
         $branches = Helper::getCompanyBranchesForSelect(1);
         $AppointmentTypes = Helper::getAppointmentTypes();
 
@@ -88,6 +88,7 @@ class PatientRegisterLinkController extends Controller
             'next_kin_phone' => $request->next_kin_phone,
             'gp_details' => $request->gp_details,
             'type' => $request->type,
+            'role_id' => PatientType::where('value', $request->type)->first()->role_id ?? 1,
             'appoint_type' => $request->appoint_type,
             'Appoint_reason' => $request->Appoint_reason,
             'approved' => $patient->approved ?? "0",
