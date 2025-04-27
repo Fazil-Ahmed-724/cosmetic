@@ -28,7 +28,10 @@ class RemoteParentSignatureController extends Controller
 
         if ($request->ajax()) {
 
-            $remote_parent_signatures = RemoteParentSignature::with('patient');;
+            $remote_parent_signatures = RemoteParentSignature::with('patient')
+            ->whereHas('patient', function($query) {
+                $query->where('role_id', auth()->user()->roles->first()->id);
+            });
 
 
             return app('datatables')->of($remote_parent_signatures)

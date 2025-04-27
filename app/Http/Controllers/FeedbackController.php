@@ -377,7 +377,7 @@ class FeedbackController extends Controller
     {
         $title = 'Feedback';
         $appointment = Appointment::findOrFail($appointment_id);
-        $patient = $appointment->patient;
+        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
         $feedback = $appointment->feedback;
 
         if ($feedback == null) {
@@ -396,7 +396,7 @@ class FeedbackController extends Controller
     {
         $title = 'Feedback';
         $appointment = Appointment::findOrFail($request->appointment_id);
-        $patient = $appointment->patient;
+        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
         $feedback = $appointment->feedback;
 
         if ($feedback == null) {

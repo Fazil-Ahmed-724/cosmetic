@@ -40,6 +40,7 @@ class SlotController extends Controller
         $used_appointment_times = Appointment::select('appointments.start_time')
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
             ->where('patients.branch_id', $branch_id)
+            ->where('patients.role_id',auth()->user()->roles->first()->id)
             ->where('date', Carbon::rawCreateFromFormat('d.m.Y', $appointment_date)->toDateString());
 
         if ($appointment_id > 0) {
@@ -496,6 +497,7 @@ class SlotController extends Controller
 
             $patients = Patient::whereIn('id', $request->patient_ids)
                 ->with('appointments', 'appointments.doctor')
+                ->where('patients.role_id',auth()->user()->roles->first()->id)
                 ->get();
 
             $followup_report_ids = config('constants.followup_report_ids', []);

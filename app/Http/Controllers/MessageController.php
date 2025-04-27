@@ -25,11 +25,13 @@ class MessageController extends Controller
         $appointment = Appointment::select('appointments.*')
             ->where('appointments.id', $request->id)
             ->with('patient')
+            ->whereHas('patient', function ($query) {
+                $query->where('role_id', auth()->user()->roles->first()->id);
+            })
             ->first();
         $patient = $appointment->patient;
         $parents_away = '';
-        if($patient->remote_patent_status == 1)
-        {
+        if ($patient->remote_patent_status == 1) {
             $parents_away = 'Thank you for booking your sons circumcision with Dr Khan. It is a regulatory requirement that both parents sign the consent form. As dad is away, there are a few things that you will need to do:
 
                 - Mum must bring ID for both herself and baby to the appointment.
@@ -54,7 +56,7 @@ class MessageController extends Controller
             'branch_address_line' => $branch->address,
             'parents_confirm' => $parents_confirm,
             'is_pre_assessment' => $is_pre_assessment,
-            'parents_away'=>$parents_away
+            'parents_away' => $parents_away
         ]);
     }
 
@@ -68,8 +70,7 @@ class MessageController extends Controller
         $patient = $appointment->patient;
 
         $parents_away = '';
-        if($patient->remote_patent_status == 1)
-        {
+        if ($patient->remote_patent_status == 1) {
 
             $parents_away = 'Thank you for booking your sons circumcision with Dr Khan. It is a regulatory requirement that both parents sign the consent form. As dad is away, there are a few things that you will need to do:
 
@@ -115,7 +116,7 @@ class MessageController extends Controller
             'parents_confirm' => $parents_confirm,
             'medicine' => $medicine,
             "is_pre_assessment" => $is_pre_assessment,
-            'parents_away'=>$parents_away
+            'parents_away' => $parents_away
         ]);
     }
 

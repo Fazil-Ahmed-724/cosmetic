@@ -20,6 +20,7 @@ class ReminderHelper
             ->where('appointments.status', 'pending')
             ->where('appointments.date', $date->toDateString())
             ->with('patient')
+            ->where('patients.role_id',auth()->user()->roles->first()->id)
             ->get();
 
         foreach ($appointments as $appointmentkey => $appointment) {

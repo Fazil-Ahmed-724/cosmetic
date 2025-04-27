@@ -41,7 +41,8 @@ class AppointmentController extends Controller
         $used_appointment_times = Appointment::select('appointments.start_time')
             ->join('patients', 'appointments.patient_id', '=', 'patients.id')
             ->where('patients.branch_id', $branch_id)
-            ->where('date', Carbon::rawCreateFromFormat('d.m.Y', $appointment_date)->toDateString());
+            ->where('date', Carbon::rawCreateFromFormat('d.m.Y', $appointment_date)->toDateString())
+            ->where('patients.role_id',auth()->user()->roles->first()->id);
 
         if ($appointment_id > 0) {
             $used_appointment_times = $used_appointment_times
@@ -212,7 +213,7 @@ class AppointmentController extends Controller
         if (Route::currentRouteName() == 'patients.appointments.edit') {
             $appointment = Appointment::findOrFail($appointment_id);
             $branches = $appointment->branch;
-            $patient = $appointment->patient;
+            $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
             $doctor = $appointment->doctor;
         } else {
             $appointment->id = 0;
@@ -534,6 +535,7 @@ class AppointmentController extends Controller
 
             $patients = Patient::whereIn('id', $request->patient_ids)
                 ->with('appointments', 'appointments.doctor')
+                ->where('patients.role_id',auth()->user()->roles->first()->id)
                 ->get();
 
             $followup_report_ids = config('constants.followup_report_ids', []);

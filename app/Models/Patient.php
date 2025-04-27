@@ -133,6 +133,7 @@ class Patient extends Model
     public function getSimilarPatientsAttribute()
     {
         $patients = Patient::where('id', '!=', $this->id)
+            ->where('patients.role_id', auth()->user()->roles->first()->id)
             ->where(function ($query) {
                 if (!in_array($this->name, [null, ''])) {
                     $query->orWhere('name', $this->name);

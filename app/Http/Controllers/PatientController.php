@@ -31,7 +31,7 @@ class PatientController extends Controller
                 ->orWhere('name', 'LIKE', '%' . $request->q . '%');
         }
 
-        $patients = $patients
+        $patients = $patients->where('patients.role_id',auth()->user()->roles->first()->id)
             ->limit(10)
             ->get();
 
@@ -516,6 +516,7 @@ class PatientController extends Controller
     public function similar(Request $request)
     {
         $patients = Patient::where('id', '!=', $request->id)
+        ->where('role_id',auth()->user()->roles->first()->id)
             ->where(function ($query) use ($request) {
                 if (!in_array($request->input('name'), [null, ''])) {
                     $query->orWhere('name', $request->input('name'));

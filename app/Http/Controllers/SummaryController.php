@@ -15,7 +15,7 @@ class SummaryController extends Controller
             ->leftJoin('appointments', 'patients.id', '=', 'appointments.patient_id')
             ->where('approved', "1")
             ->has('appointments', '>', 0)
-            ->with('appointments');
+            ->with('appointments')->where('patients.role_id',auth()->user()->roles->first()->id);
 
         if ($request->has('appointment_type') && $request->appointment_type != '') {
             $patients = $patients->where('appointments.appointment_type', $request->appointment_type);
