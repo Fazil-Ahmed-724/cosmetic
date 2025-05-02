@@ -153,7 +153,7 @@ class TemplateController extends Controller
         $appointment = Appointment::where('patient_id', $patient->id)->first();
         // }
 
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
 
         $html = Helper::fillReportDummy($appointment->id, $template->html);
 

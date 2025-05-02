@@ -116,7 +116,7 @@ class Helper
     public static function fillReport(int $appointment_id, string $html)
     {
         $appointment = Appointment::findOrFail($appointment_id);
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
         $doctor = $appointment->doctor;
         $branch = $patient->branch;
         $staff = Auth::user();

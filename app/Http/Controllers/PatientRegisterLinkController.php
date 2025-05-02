@@ -226,7 +226,8 @@ class PatientRegisterLinkController extends Controller
         $data = [
             'email' => $request->email,
             'cell_number' => $request->cell_number,
-            'remote_patent_status' => $request->remote_patent_status
+            'remote_patent_status' => $request->remote_patent_status,
+            'role_id' => auth()->user()->roles->first()->id ?? 1,
         ];
 
         if ($request->form_type == 'submit') {

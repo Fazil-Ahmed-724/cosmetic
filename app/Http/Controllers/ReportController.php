@@ -22,7 +22,7 @@ class ReportController extends Controller
     public function reports(Request $request, $appointment_id = 0)
     {
         $appointment = Appointment::findOrFail($appointment_id);
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
         $title = $patient->name . '\'s Reports';
 
         // $reports = Template::whereIn('patient_type', [$patient->type, 'any'])
@@ -251,7 +251,7 @@ class ReportController extends Controller
             abort(404);
         }
 
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
 
         $filename = Str::slug($request->name) . '-' . uniqid()
             . '.' . $request->file('file')->getClientOriginalExtension();

@@ -213,7 +213,7 @@ class AppointmentController extends Controller
         if (Route::currentRouteName() == 'patients.appointments.edit') {
             $appointment = Appointment::findOrFail($appointment_id);
             $branches = $appointment->branch;
-            $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+            $patient = $appointment->patient;
             $doctor = $appointment->doctor;
         } else {
             $appointment->id = 0;

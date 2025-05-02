@@ -422,7 +422,7 @@ class AuditController extends Controller
     {
         $title = 'Appointment Audit';
         $appointment = Appointment::findOrFail($appointment_id);
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
         $audit = $appointment->audit;
 
         if ($audit == null) {
@@ -440,7 +440,7 @@ class AuditController extends Controller
     public function auditSave(Request $request, $appointment_id = 0)
     {
         $appointment = Appointment::findOrFail($appointment_id);
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
         $audit = $appointment->audit;
 
         if ($audit == null) {
