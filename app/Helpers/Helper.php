@@ -86,9 +86,10 @@ class Helper
         $patient_types = PatientType::where('role_id',auth()->user()->roles->first()->id)->pluck('name', 'value')->toArray();
         return $patient_types;
     }
-    public static function getPatientTypesForSelectWithOutRole()
+
+    public static function getPatientTypesForSelectWithoutAuth($role_id)
     {
-        $patient_types = PatientType::pluck('name', 'value')->toArray();
+        $patient_types = PatientType::where('role_id',$role_id)->pluck('name', 'value')->toArray();
         return $patient_types;
     }
     public static function getAppointmentTypes()
@@ -231,7 +232,7 @@ class Helper
     public static function fillReportDummy(int $appointment_id, string $html)
     {
         $appointment = Appointment::findOrFail($appointment_id);
-        $patient = $appointment->patient->where('patients.role_id',auth()->user()->roles->first()->id);
+        $patient = $appointment->patient;
         $doctor = $appointment->doctor;
         $branch = $patient->branch;
         $staff = Auth::user();

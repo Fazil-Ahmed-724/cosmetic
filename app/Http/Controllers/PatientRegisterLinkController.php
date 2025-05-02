@@ -34,7 +34,11 @@ class PatientRegisterLinkController extends Controller
         $patient = new Patient();
         $patient->id = 0;
 
-        $patient_types = Helper::getPatientTypesForSelectWithOutRole();
+        if(auth()->user() == null){
+            $patient_types = Helper::getPatientTypesForSelectWithoutAuth($patient_inq->role_id);
+        }else{
+            $patient_types = Helper::getPatientTypesForSelect();
+        }
         $branches = Helper::getCompanyBranchesForSelect(1);
         $AppointmentTypes = Helper::getAppointmentTypes();
 

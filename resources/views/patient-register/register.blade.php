@@ -9,7 +9,7 @@
         <a href="{{ route('dashboard') }}">
             <img alt="Logo" src="{{ url('/') }}/logo.jpg" style="display: block;margin: auto;" />
         </a>
-
+        <h3 class="text-center mt-4 PatientType">Patient Registration</h3>
         <div class="card mt-6">
             <div class="card-body">
                 IN CASE OF CHILDREN: Please remember both parents must attend clinic on the day of procedure. We need photo ID documents for both parents and ID for the child such as birth certificate, red book, hospital bands, passport, resident permit. We will not perform any procedure if the above are not provided on the day.
@@ -509,6 +509,14 @@
 
     function onUserTypeChange () {
         var selected_type = $('[name="type"]').val() ?? 'adult';
+        var pat_type =  selected_type.replace(/_/g, ' ');
+        var formatted = pat_type
+            .toLowerCase()
+            .split(' ')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+        $('.PatientType').text(formatted);
+        console.log(selected_type);
         switch (selected_type) {
             case 'adult':
                 $('.hide-adult').hide();
@@ -520,6 +528,56 @@
                 $('.hide-new_born input').attr('required', true);
                 break;
 
+            case 'minor_surgery_ms':
+                $('.hide-adult').hide();
+                $('.hide-old_boy').show();
+                $('.hide-new_born').show();
+                //
+                $('.hide-adult input').removeAttr('required');
+                $('.hide-old_boy input').attr('required', true);
+                $('.hide-new_born input').attr('required', true);
+                break;
+
+            case 'aesthetics_botox':
+                $('.hide-adult').hide();
+                $('.hide-old_boy').show();
+                $('.hide-new_born').show();
+                //
+                $('.hide-adult input').removeAttr('required');
+                $('.hide-old_boy input').attr('required', true);
+                $('.hide-new_born input').attr('required', true);
+                break;
+
+            case 'aesthetics_filler':
+                $('.hide-adult').hide();
+                $('.hide-old_boy').show();
+                $('.hide-new_born').show();
+                //
+                $('.hide-adult input').removeAttr('required');
+                $('.hide-old_boy input').attr('required', true);
+                $('.hide-new_born input').attr('required', true);
+                break;
+
+            case 'aesthetics_mesotherapy':
+                $('.hide-adult').hide();
+                $('.hide-old_boy').show();
+                $('.hide-new_born').show();
+                //
+                $('.hide-adult input').removeAttr('required');
+                $('.hide-old_boy input').attr('required', true);
+                $('.hide-new_born input').attr('required', true);
+                break;
+
+            case 'minor_surgery_vasc':
+                $('.hide-adult').hide();
+                $('.hide-old_boy').show();
+                $('.hide-new_born').show();
+                //
+                $('.hide-adult input').removeAttr('required');
+                $('.hide-old_boy input').attr('required', true);
+                $('.hide-new_born input').attr('required', true);
+                break;
+            
             default:
                 $('.hide-adult').show();
                 $('.hide-old_boy').hide();
