@@ -634,12 +634,70 @@
                     $('.hide-adult').hide();
                     $('.hide-old_boy').show();
                     $('.hide-new_born').show();
+                    //
+                    $('.hide-adult input').removeAttr('required');
+                    $('.hide-old_boy input').attr('required', true);
+                    $('.hide-new_born input').attr('required', true);
                     break;
 
+                case 'minor_surgery_ms':
+                    $('.hide-adult').hide();
+                    $('.hide-old_boy').show();
+                    $('.hide-new_born').show();
+                    //
+                    $('.hide-adult input').removeAttr('required');
+                    $('.hide-old_boy input').attr('required', true);
+                    $('.hide-new_born input').attr('required', true);
+                    break;
+
+                case 'aesthetics_botox':
+                    $('.hide-adult').hide();
+                    $('.hide-old_boy').show();
+                    $('.hide-new_born').show();
+                    //
+                    $('.hide-adult input').removeAttr('required');
+                    $('.hide-old_boy input').attr('required', true);
+                    $('.hide-new_born input').attr('required', true);
+                    break;
+
+                case 'aesthetics_filler':
+                    $('.hide-adult').hide();
+                    $('.hide-old_boy').show();
+                    $('.hide-new_born').show();
+                    //
+                    $('.hide-adult input').removeAttr('required');
+                    $('.hide-old_boy input').attr('required', true);
+                    $('.hide-new_born input').attr('required', true);
+                    break;
+
+                case 'aesthetics_mesotherapy':
+                    $('.hide-adult').hide();
+                    $('.hide-old_boy').show();
+                    $('.hide-new_born').show();
+                    //
+                    $('.hide-adult input').removeAttr('required');
+                    $('.hide-old_boy input').attr('required', true);
+                    $('.hide-new_born input').attr('required', true);
+                    break;
+
+                case 'minor_surgery_vasc':
+                    $('.hide-adult').hide();
+                    $('.hide-old_boy').show();
+                    $('.hide-new_born').show();
+                    //
+                    $('.hide-adult input').removeAttr('required');
+                    $('.hide-old_boy input').attr('required', true);
+                    $('.hide-new_born input').attr('required', true);
+                    break;
+                
                 default:
                     $('.hide-adult').show();
                     $('.hide-old_boy').hide();
                     $('.hide-new_born').hide();
+                    //
+                    $('.hide-adult input').attr('required', true);
+                    $('.hide-old_boy input').removeAttr('required');
+                    $('.hide-new_born input').removeAttr('required');
                     break;
             }
         }
