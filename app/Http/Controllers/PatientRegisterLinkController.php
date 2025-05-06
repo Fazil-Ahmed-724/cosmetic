@@ -123,7 +123,7 @@ class PatientRegisterLinkController extends Controller
             ])
                 ->leftJoin('patients', function ($join) {
                     $join->on('patient_inquiries.patient_id', 'patients.id');
-                })->where('patients.role_id',auth()->user()->roles->first()->id);
+                });
 
             if ($request->has('branch_id')) {
                 $patient_inqs = $patient_inqs
