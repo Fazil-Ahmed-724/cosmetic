@@ -89,7 +89,7 @@ class Helper
 
     public static function getPatientTypesForSelectWithoutAuth($role_id)
     {
-        $patient_types = PatientType::where('role_id',$role_id)->pluck('name', 'value')->toArray();
+        $patient_types = PatientType::where('role_id',$role_id)->get()->toArray();
         return $patient_types;
     }
     public static function getAppointmentTypes()

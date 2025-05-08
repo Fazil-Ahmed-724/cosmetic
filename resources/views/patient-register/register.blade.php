@@ -11,7 +11,7 @@
         </a>
         <h3 class="text-center mt-4 PatientType">Patient Registration</h3>
         <div class="card mt-6">
-            <div class="card-body">
+            <div class="card-body PatientTypeText">
                 IN CASE OF CHILDREN: Please remember both parents must attend clinic on the day of procedure. We need photo ID documents for both parents and ID for the child such as birth certificate, red book, hospital bands, passport, resident permit. We will not perform any procedure if the above are not provided on the day.
             </div>
         </div>
@@ -103,8 +103,8 @@
                         <select class="form-control form-control-lg {{ $errors->has('type') ? 'is-invalid' : '' }} basic-select2"
                             name="type" placeholder="Patient Type" required>
                             @foreach ($patient_types as $typeKey => $type)
-                            <option value="{{ $typeKey }}" {{ (old('type', $patient->type) == $typeKey) ? 'selected' : '' }}>
-                                {{ $type }}
+                            <option value="{{ $type['value'] }}" data-text={{$type['text']}}  {{ (old('type', $patient->type) == $type['value']) ? 'selected' : '' }}>
+                                {{ $type['name'] }}
                             </option>
                             @endforeach
                         </select>
@@ -508,7 +508,9 @@
     });
 
     function onUserTypeChange () {
+        var selectedOption = $('[name="type"] option:selected');
         var selected_type = $('[name="type"]').val() ?? 'adult';
+        var selectedDataText = selectedOption.data('text');
         var pat_type =  selected_type.replace(/_/g, ' ');
         var formatted = pat_type
             .toLowerCase()
@@ -516,6 +518,7 @@
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
         $('.PatientType').text(formatted);
+        $('.PatientTypeText').text(selectedDataText);
         console.log(selected_type);
         switch (selected_type) {
             case 'adult':
