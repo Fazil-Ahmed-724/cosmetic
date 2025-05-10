@@ -103,7 +103,7 @@
                         <select class="form-control form-control-lg {{ $errors->has('type') ? 'is-invalid' : '' }} basic-select2"
                             name="type" placeholder="Patient Type" required>
                             @foreach ($patient_types as $typeKey => $type)
-                            <option value="{{ $type['value'] }}" data-text={{$type['text']}}  {{ (old('type', $patient->type) == $type['value']) ? 'selected' : '' }}>
+                            <option value="{{ $type['value'] }}" data-text="{{ $type['text'] }}" {{ (old('type', $patient->type) == $type['value']) ? 'selected' : '' }}>
                                 {{ $type['name'] }}
                             </option>
                             @endforeach
