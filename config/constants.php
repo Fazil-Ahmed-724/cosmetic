@@ -315,7 +315,7 @@ healthcare/clinics/glasgow/transcend_consulting_rooms.aspx</p>",
     'appointment_types' => [
         'direct_appointment' => [
             'name' => "Direct appointment",
-            'report_ids' => [51, 61, 66, 49, 59, 64, 45, 46, 52, 67, 62]
+            'report_ids' => [51, 61, 66, 49, 59, 64, 45, 46, 52, 67, 62, 9, 10, 11, 20, 34, 36, 105, 1112, 1123, 1131, 1133, 1136, 1140, 1151]
         ],
         'pre_assessment_appointment' => [
             'name' => "Pre assessment appointment",

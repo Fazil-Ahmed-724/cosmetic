@@ -31,7 +31,8 @@ class TemplateController extends Controller
 
             $patient_type = $request->patient_type ?? 'All';
             $report_type = $request->report_type ?? 'All';
-
+            $patient_types = PatientType::where('role_id',auth()->user()->roles->first()->id)->pluck('value')->toArray();
+            
             $query = Template::select([
                 'templates.id',
                 'templates.name',
@@ -39,7 +40,7 @@ class TemplateController extends Controller
                 'templates.is_report',
                 'templates.html',
             ])
-                ->where('is_active', 1);
+                ->where('is_active', 1)->whereIn('patient_type', $patient_types);
                 // ->where('role_id', auth()->user()->roles->first()->id);
 
             if (in_array($patient_type, array_keys($patient_types)) && $patient_type != 'All') {

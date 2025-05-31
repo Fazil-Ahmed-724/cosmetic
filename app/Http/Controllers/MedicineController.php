@@ -14,6 +14,7 @@ class MedicineController extends Controller
         $title = 'Medicines';
 
         if ($request->ajax()) {
+
             $medicines = Medicine::select(['medicines.id', 'medicines.name', 'medicines.batch', 'medicines.expiry'])->where('role_id',auth()->user()->roles->first()->id);
 
             return app('datatables')->of($medicines)

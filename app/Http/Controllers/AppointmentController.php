@@ -404,9 +404,9 @@ class AppointmentController extends Controller
         $body = $request->email_body ?? '';
         $appointment = Appointment::findOrFail($request->id);
         $patient = Patient::findOrFail($appointment->patient_id);
-
+        
         $reportIds = config('constants.appointment_types.' . $appointment->appointment_type)['report_ids'] ?? [];
-
+        
         $reports = Template::where([
             // 'patient_type' => $patient->type,
             'is_active' => '1',
@@ -418,7 +418,7 @@ class AppointmentController extends Controller
             ->sortBy(function ($report, $key) use ($reportIds) {
                 return array_search($report->id, $reportIds);
             });
-
+        
         $attachments = [];
         foreach ($reports as $report) {
 
@@ -530,14 +530,13 @@ class AppointmentController extends Controller
     public function followupStatusChange(Request $request)
     {
         // $logs = [];
-
+            
         if ($request->has('patient_ids') && is_array($request->patient_ids)) {
 
             $patients = Patient::whereIn('id', $request->patient_ids)
                 ->with('appointments', 'appointments.doctor')
                 ->where('patients.role_id',auth()->user()->roles->first()->id)
                 ->get();
-
             $followup_report_ids = config('constants.followup_report_ids', []);
 
             $all_followup_ids = [];
